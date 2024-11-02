@@ -1,3 +1,28 @@
+# Diferença de REST e RESTful:
+
+## RESTful: Estilo arquitetural que possui as Constraints
+
+Cliente-Servidor: FrontEnd ou uma outra API, etc...
+
+Stateless: A aplicação não deve possuir estado, o servidor não pode armazenar informação contextual sobre o cliente que está usando a API
+
+Cache:
+
+Interface Uniforme: URI, HTTP, metodos CRUD
+
+Sistema em camadas
+
+Codigo sob demanda: Opcional
+
+## RESTful: Segue todas as Constraints obrigatorias religiosamente
+
+
+# Diferença de URI vs URL:
+
+URI: É um conjunto de caracteres como objetivo dar um endereço a um objeto
+
+URL: Tipo de URI - Localizardor de recurso uniforme
+
 # Spring MVC:
 
 É um projeto do ecossistema spring para desenvolvermos em WEB, controladores WEB que recebem requisiçoes HTTP
@@ -69,6 +94,18 @@ Esta anotação é um conjunto de anotações como -> @Getter, @Setter, @EqualsA
 
     @EqualsAndHashCode.INCLUDE
 ex.: private Long id;
+
+
+## @ResponseBody: 
+
+Ela indica que a resposta dos metodos que estão anotados devem ir para a resposta HTTP
+
+
+## @RestController
+
+Ela é um conjunto de anotação:
+
+dentro dela tem o @ResponseBody e o @Controller
 
 <!-- SPRING DATA JPA -->
 
