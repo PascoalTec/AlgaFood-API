@@ -1,9 +1,9 @@
 insert into cozinha (nome) values (1, 'Tailandesa');
 insert into cozinha (nome) values (2, 'Indiana');
 
-insert into restaurante (taxa_frete, cozinha_id, id, nome) values (10, 1, 1,'Thai Gourmet');
+insert into restaurante (taxa_frete, cozinha_id, id, nome) values (10.00, 1, 1,'Thai Gourmet');
 insert into restaurante (taxa_frete, cozinha_id, id, nome) values (9.50, 1, 2, 'Thai Delivery');
-insert into restaurante (taxa_frete, cozinha_id, id, nome) values (3, 2, 3, 'Tuk Tuk Comida Indiana');
+insert into restaurante (taxa_frete, cozinha_id, id, nome) values (15.00, 2, 3, 'Tuk Tuk Comida Indiana');
 
 insert into estado (id, nome) values (1, 'Minas Gerais');
 insert into estado (id, nome) values (2, 'Sao Paulo');

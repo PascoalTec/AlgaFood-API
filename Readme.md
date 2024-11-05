@@ -107,6 +107,44 @@ Ela é um conjunto de anotação:
 
 dentro dela tem o @ResponseBody e o @Controller
 
+
+## @PathVariable:
+
+Usada para ter um vínculo do caminho da variável da URI e a variável do metodo, ela é usada atras do tipo do metodo
+
+ex.: public Cozinha buscar(@PathVariable Long cozinhaId)
+
+
+## @JsonProperty:
+
+Faz a desserialização de xml ou json
+
+Ela tem uma propriedade (acess.READ_ONLY), que estamos dizendo que esta propriedade será apenas para leitura <!-- Ela tem mais propriedades-->
+
+
+## @JsonIgnore:
+
+Ignora essa propriedade na hora que for gerar a apresentação
+
+
+## @JsonRootName:
+
+Coloca no inicio da classe, você faz a mudança na hora da apresentação por xml, por exemplo:
+
+<cozinha>
+    <id>1</id>
+    <titulo>Tailandesa</titulo>
+</cozinha>
+
+você mudaria o cozinha para qualquer nome que quiser
+
+
+## @RequestBody: 
+
+ex.: public void adicionar(@RequestBody Cozinha cozinha)
+
+O parametro indicado receberá o corpo da requisição, oque for adicionado, será atribuido ao metodo cozinha
+
 <!-- SPRING DATA JPA -->
 
 
