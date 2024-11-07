@@ -168,3 +168,13 @@ O atributo vai representar o identificador da identidade
 
 IDENTITY: Passa a responsabilidade para o provedor do ID, nesse caso o MySql
 
+
+
+# CRUD:
+
+#### CREATE - READ - UPDATE E DELETE
+
+
+## Patch:
+
+Ela altera apenas a propriedade que você está especificando

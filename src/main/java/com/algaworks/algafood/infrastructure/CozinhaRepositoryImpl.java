@@ -1,16 +1,15 @@
 package com.algaworks.algafood.infrastructure;
 
 import java.util.List;
-
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.repository.CozinhaRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
-@Component
+@Repository
 public class CozinhaRepositoryImpl implements CozinhaRepository {
     
     @PersistenceContext

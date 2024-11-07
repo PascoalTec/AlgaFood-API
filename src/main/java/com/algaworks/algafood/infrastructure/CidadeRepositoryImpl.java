@@ -1,7 +1,9 @@
 package com.algaworks.algafood.infrastructure;
 
 import java.util.List;
-import org.springframework.stereotype.Component;
+
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import com.algaworks.algafood.domain.model.Cidade;
 import com.algaworks.algafood.domain.repository.CidadeRepository;
@@ -9,7 +11,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 
-@Component
+@Repository
 public class CidadeRepositoryImpl implements CidadeRepository {
 
 
@@ -32,8 +34,13 @@ public class CidadeRepositoryImpl implements CidadeRepository {
     
     @Transactional
     @Override
-    public void remover(Cidade cidade){
-        cidade = buscar(cidade.getId());
+    public void remover(Long id){
+        Cidade cidade = buscar(id);
+
+        if (cidade == null) {
+            throw new EmptyResultDataAccessException(1);
+        }
+
         entityManager.remove(cidade);
     }
 
