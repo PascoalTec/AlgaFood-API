@@ -127,6 +127,14 @@ Ela tem uma propriedade (acess.READ_ONLY), que estamos dizendo que esta propried
 Ignora essa propriedade na hora que for gerar a apresentação
 
 
+## @JsonIgnoreProperties:
+#### ex: @JsonIgnoreProperties("hibernateLazyInitializer")
+
+Ele ignora propriedades que estão dentro da instância atribuida a variavel
+
+
+Ele não ignora a Cozinha, ele ignora uma propriedade da Cozinha
+
 ## @JsonRootName:
 
 Coloca no inicio da classe, você faz a mudança na hora da apresentação por xml, por exemplo:
@@ -145,7 +153,42 @@ ex.: public void adicionar(@RequestBody Cozinha cozinha)
 
 O parametro indicado receberá o corpo da requisição, oque for adicionado, será atribuido ao metodo cozinha
 
+## @ResponseEntity:
+
+Ele representa a resposta que vai ser retornada, porém com ele podemos manipular melhor a resposta.
+
+
+## @JoinColumn
+
+Indica que a classe na qual você está utilizando-a é a dona ou o lado forte do relacionamento.
+
+
 <!-- SPRING DATA JPA -->
+
+# Spring Data Jpa Repository ou (JpaRepository)
+
+
+#### Para incluirmos o JpaRepository, seria em uma classe de interface, extendendo para JpaRepository<Repositorio da Entidade, Tipo da Identidade>
+
+@Repository
+ex.: public interface CozinhaRepository extends JpaRepository<Cozinha, Long>
+
+
+## LIKE - keyword:
+
+#### Para pormos o "LIKE" pelo JpaRepository, temos algumas keywords (Containing)
+
+ex.: findTodasByNomeContaining
+
+
+## @Query:
+
+CONSULTA JPQL
+
+
+## @Param:
+
+passa o nome do parametro que queremos fazer o bind dentro do @Query
 
 
 ## @Entity:
@@ -169,6 +212,35 @@ O atributo vai representar o identificador da identidade
 IDENTITY: Passa a responsabilidade para o provedor do ID, nesse caso o MySql
 
 
+## @OneToMany:
+
+Relacionamento de Um para Muitos
+
+ex.: UMA cozinha tem em VÁRIOS/MUITOS restaurantes
+
+
+## @ManyToOne:
+
+Relacionamento de Muitos para um
+
+ex.: Muitos restaurantes tem UMA cozinha
+
+
+## @ManyToMany:
+
+Relacionamento Muitos para Muitos
+
+ex.: MUITOS restaurantes tem MUITAS formas de pagamento
+
+
+## @Embeddable:
+
+Indica que esta classe é uma parte de alguma outra entidade, não é uma entidade em si e todas as propriedades desta classe são refletidas na tabela da entidade que incorpora esta classe
+
+
+## @Embedded:
+
+Indica que esta propriedade é de um tipo "Embedado" ou seja, que está sendo incorporado pela classe Embeddadle
 
 # CRUD:
 
@@ -178,3 +250,20 @@ IDENTITY: Passa a responsabilidade para o provedor do ID, nesse caso o MySql
 ## Patch:
 
 Ela altera apenas a propriedade que você está especificando
+
+
+
+# Eager Loading (Carregamento Ansioso):
+
+Tudo que termina com ToOne, usa por padrão o Eager Loading
+
+para fazer a mudança de Eager para Lazy, adicionamos o parametro fetch passando FetchType.LAZY
+
+
+# Lazy Loading (Carregamento Preguiçoso):
+
+Carregamento só vai acontecer quando realmente for necessário, se a gente não usar, ele não irá fazer o carregamento
+
+Tudo que termina com ToMany, usa por padrão o Lazy Loading
+
+
