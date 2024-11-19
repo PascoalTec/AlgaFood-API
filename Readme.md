@@ -163,6 +163,20 @@ Ele representa a resposta que vai ser retornada, porém com ele podemos manipula
 Indica que a classe na qual você está utilizando-a é a dona ou o lado forte do relacionamento.
 
 
+## @Builder:
+
+Padrão de projeto para construir objeto, em uma linguagem mais fluente
+
+
+## @ExceptionHandler:
+
+Aceita que um argumento que é a classe que eu quero tratar, vai capturar todas as excessões que são dela ou sub dela
+
+
+## @ControllerAdvice:
+
+Dentro de um componente anotado por ela, pode-se adicionar as ExceptionHandler que as excessões de todo o projeto será controlado pela classe que está anotada o Controller Advice, será o centro das exceptions
+
 <!-- SPRING DATA JPA -->
 
 # Spring Data Jpa Repository ou (JpaRepository)
