@@ -256,6 +256,25 @@ Indica que esta classe é uma parte de alguma outra entidade, não é uma entida
 
 Indica que esta propriedade é de um tipo "Embedado" ou seja, que está sendo incorporado pela classe Embeddadle
 
+
+## @Validated:
+
+Ele aceita um argumento que o @Valid não aceita, e as vezes é necessário usar ele por conta que usa a validação específica
+
+
+# Bean Validation:
+
+@NotNull: Não pode ser nula
+
+@NotEmpty: Não pode estar vazio
+
+@NotBlank: Não pode ser nulo, não pode ser vazio e não pode ter espaço em branco
+
+@Size:
+
+@Valid: Antes de executar o metodo, ele já faz uma validação de uma instancia
+
+
 # CRUD:
 
 #### CREATE - READ - UPDATE E DELETE
