@@ -128,12 +128,17 @@ Ignora essa propriedade na hora que for gerar a apresentação
 
 
 ## @JsonIgnoreProperties:
-#### ex: @JsonIgnoreProperties("hibernateLazyInitializer")
 
 Ele ignora propriedades que estão dentro da instância atribuida a variavel
 
 
 Ele não ignora a Cozinha, ele ignora uma propriedade da Cozinha
+
+#### ex: @JsonIgnoreProperties("hibernateLazyInitializer") -> Lazy - ele demora a iniciar
+
+#### ex: @JsonIgnoreProperties("nome", allowGetters = true) -> permite metodo de GET
+
+
 
 ## @JsonRootName:
 
@@ -298,5 +303,32 @@ para fazer a mudança de Eager para Lazy, adicionamos o parametro fetch passando
 Carregamento só vai acontecer quando realmente for necessário, se a gente não usar, ele não irá fazer o carregamento
 
 Tudo que termina com ToMany, usa por padrão o Lazy Loading
+
+
+# Integration Tests (IT) jUnit
+
+    @Test
+   public void testarCadastroCozinhaComSucesso() {
+      Cozinha novaCozinha = new Cozinha();
+      novaCozinha.setNome("Chinesa");
+   
+      novaCozinha = cadastroCozinha.salvar(novaCozinha);
+
+      assertThat(novaCozinha).isNotNull();
+      assertThat(novaCozinha.getId()).isNotNull();
+   }
+
+
+# Teste de API
+
+Atualmente eu estou com a versão 3.3.4 do Spring, e no curso está 2.7.4, alguns testes estão defasados e faz sentido se der error.
+
+faz a chamada para a API e retorna uma resposta
+
+
+
+# DTO (Data Transfer Object)
+
+É um padrão de projetos muito usado para o transporte de dados, um dto agrupa um conjunto de propriedades de uma ou mais classes, por exemplo entidades do nosso modelo em uma classe de transferencia de classes mais simples.
 
 
