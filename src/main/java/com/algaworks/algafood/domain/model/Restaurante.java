@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import com.algaworks.algafood.core.validation.Groups;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -18,12 +17,6 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.groups.ConvertGroup;
-import jakarta.validation.groups.Default;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -39,18 +32,11 @@ public class Restaurante {
     private Long id;
 
     @Column(nullable = false)
-    @NotBlank
     private String nome;
 
-    @NotNull
-    @PositiveOrZero
     @Column(name = "taxa_frete", nullable = false)
     private BigDecimal taxaFrete;
 
-
-    
-    @Valid
-    @ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
     @ManyToOne
     @JoinColumn(name = "cozinha_id", nullable = false)
     private Cozinha cozinha;
@@ -58,6 +44,9 @@ public class Restaurante {
 
     @Embedded // indica que esta propriedade é de um tipo "Embedado" incorporado pela classe Endereco
     private Endereco endereco;
+
+    
+    private Boolean ativo = Boolean.TRUE;
 
 
     @CreationTimestamp  // ele informa que a propriedade anotada, deve ser atribuida com a data hora atual
@@ -75,9 +64,15 @@ public class Restaurante {
     inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id")) // define o nome da forma pagamento
     private List<FormaPagamento> formasPagamento = new ArrayList<>();
 
-
-
     @OneToMany(mappedBy = "restaurante")
     private List<Produto> produtos = new ArrayList<>();
 
+
+    public void ativar() {
+        setAtivo(true);
+    }
+
+    public void inativar() {
+        setAtivo(false);
+    }
 }

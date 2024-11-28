@@ -332,3 +332,12 @@ faz a chamada para a API e retorna uma resposta
 É um padrão de projetos muito usado para o transporte de dados, um dto agrupa um conjunto de propriedades de uma ou mais classes, por exemplo entidades do nosso modelo em uma classe de transferencia de classes mais simples.
 
 
+
+
+## Chatty API:
+
+Quando modelamos recursos de modelagem fina, estamos criando uma Chatty API
+
+## Chunky API:
+
+È aquela aonde as requisições são feitas em uma única requisição
