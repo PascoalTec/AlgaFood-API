@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.algaworks.algafood.api.assembler.RestauranteInputDisassembler;
 import com.algaworks.algafood.api.assembler.RestauranteModelAssember;
-import com.algaworks.algafood.api.model.CozinhaModel;
 import com.algaworks.algafood.api.model.RestauranteModel;
 import com.algaworks.algafood.api.model.input.RestauranteInput;
+import com.algaworks.algafood.domain.exception.CidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.NegocioException;
 import com.algaworks.algafood.domain.model.Restaurante;
@@ -52,22 +52,13 @@ public class RestauranteController {
     public RestauranteModel buscar(@PathVariable Long restauranteId){
         Restaurante restaurante =  cadastroRestauranteService.buscarOuFalhar(restauranteId);
 
-        CozinhaModel cozinhaModel = new CozinhaModel();
-        cozinhaModel.setId(restaurante.getCozinha().getId());
-        cozinhaModel.setNome(restaurante.getCozinha().getNome());
-
-        RestauranteModel restauranteModel = new RestauranteModel();
-        restauranteModel.setId(restaurante.getId());
-        restauranteModel.setNome(restaurante.getNome());
-        restauranteModel.setPrecoFrete(restaurante.getTaxaFrete());
-        restauranteModel.setCozinha(cozinhaModel);
-
         return restauranteModelAssember.toModel(restaurante);
     }
 
 
     @PostMapping
     @Transactional
+    @ResponseStatus(HttpStatus.CREATED)
     public RestauranteModel adicionar(@RequestBody @Valid RestauranteInput restauranteInput) {
         try {
             Restaurante restaurante = restauranteInputDisassembler.toDomainObject(restauranteInput);
@@ -87,7 +78,7 @@ public class RestauranteController {
             restauranteInputDisassembler.copyToDomainObject(restauranteInput, restauranteAtual);
 
             return restauranteModelAssember.toModel(cadastroRestauranteService.salvar(restauranteAtual));
-            } catch (CozinhaNaoEncontradaException e) {
+            } catch (CozinhaNaoEncontradaException | CidadeNaoEncontradaException e) {
                 throw new NegocioException(e.getMessage());
             }
     }
