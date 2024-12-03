@@ -1,5 +1,7 @@
 package com.algaworks.algafood.domain.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,15 +11,28 @@ import com.algaworks.algafood.domain.exception.UsuarioNaoEncontradoException;
 import com.algaworks.algafood.domain.model.Usuario;
 import com.algaworks.algafood.domain.repository.UsuarioRepository;
 
+import jakarta.persistence.EntityManager;
+
 @Service
 public class CadastroUsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private EntityManager entityManager;
     
     @Transactional
     public Usuario salvar(Usuario usuario) {
+        entityManager.detach(usuario);
+
+        Optional<Usuario> usuarioExistente = usuarioRepository.findByEmail(usuario.getEmail());
+
+        if (usuarioExistente.isPresent() && !usuarioExistente.get().equals(usuario)) {
+            throw new NegocioException(String.format("Já existe um usuário cadastrado com este e-mail %s", usuario.getEmail()));
+        }
         return usuarioRepository.save(usuario);
+        
     }
     
     @Transactional
