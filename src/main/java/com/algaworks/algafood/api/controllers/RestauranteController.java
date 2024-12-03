@@ -95,6 +95,18 @@ public class RestauranteController {
         cadastroRestauranteService.inativar(restauranteId);
     }
 
+    @PutMapping("/ativacoes")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void ativarMultiplos(@RequestBody List<Long> restauranteIds) {
+        cadastroRestauranteService.ativar(restauranteIds);
+    }
+
+    @DeleteMapping("/ativacoes")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void inativarMultiplos(@RequestBody List<Long> restauranteIds) {
+        cadastroRestauranteService.inativar(restauranteIds);
+    }
+
 
     @PutMapping("/{restauranteId}/abertura")
     @ResponseStatus(HttpStatus.NO_CONTENT)
