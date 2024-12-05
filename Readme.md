@@ -280,6 +280,17 @@ Ele aceita um argumento que o @Valid não aceita, e as vezes é necessário usar
 @Valid: Antes de executar o metodo, ele já faz uma validação de uma instancia
 
 
+## @PrePersist:
+#### ex.: Antes de persistir uma entidade Pedido, antes de inserir um novo registro de pedido no banco de dados, chama este metodo
+
+Metodo de CallBack JPA, ele é executado em alguns eventos do ciclo de vida da entidade
+
+
+## @JsonView:
+
+Customiza uma serialização de objetos de acordo com uma View
+
+
 # CRUD:
 
 #### CREATE - READ - UPDATE E DELETE
@@ -341,3 +352,13 @@ Quando modelamos recursos de modelagem fina, estamos criando uma Chatty API
 ## Chunky API:
 
 È aquela aonde as requisições são feitas em uma única requisição
+
+
+
+# UUID:
+
+## Usar o UUID como PRIMARY KEY, não é recomendado por que os bancos não se comportam muito bem com chaves primárias como String
+
+Identificador Unico Universal
+
+

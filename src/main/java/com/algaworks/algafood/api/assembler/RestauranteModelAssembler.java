@@ -9,7 +9,7 @@ import com.algaworks.algafood.api.model.RestauranteModel;
 import com.algaworks.algafood.domain.model.Restaurante;
 
 @Component
-public class RestauranteModelAssember {
+public class RestauranteModelAssembler {
     
 	@Autowired
 	private ModelMapper modelMapper;

@@ -4,7 +4,11 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.algaworks.algafood.domain.exception.NegocioException;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
@@ -18,6 +22,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -32,6 +37,8 @@ public class Pedido {
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String codigo;
 
     private BigDecimal subtotal;
     private BigDecimal taxaFrete;
@@ -80,5 +87,36 @@ public class Pedido {
 
     public void atribuirPedidoAosItens() {
         getItens().forEach(item -> item.setPedido(this));
+    }
+
+    public void confirmar() {
+        setStatus(StatusPedidoEnum.CONFIRMADO);
+        setDataConfirmacao(OffsetDateTime.now());
+    }
+
+    public void entregar() {
+        setStatus(StatusPedidoEnum.ENTREGUE);
+        setDataEntrega(OffsetDateTime.now());
+    }
+
+    public void cancelar() {
+        setStatus(StatusPedidoEnum.CANCELADO);
+        setDataCancelamento(OffsetDateTime.now());
+    }
+
+    private void setStatus(StatusPedidoEnum novoStatus) {
+
+        if(getStatus().naoPodeAlterarPara(novoStatus)) {
+            throw new NegocioException(
+                String.format("Status do pedido %d não pode ser alterado de %s para %s",
+                getCodigo(), getStatus().getDescricao(), novoStatus.getDescricao())); //pega o id e o status e o que quer mudar
+        }
+
+        this.status = novoStatus; //se der certo atribui o status para o novo
+    }
+
+    @PrePersist
+    private void gerarCodigo() {
+        setCodigo(UUID.randomUUID().toString());
     }
 }
