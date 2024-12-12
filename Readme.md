@@ -362,3 +362,7 @@ Quando modelamos recursos de modelagem fina, estamos criando uma Chatty API
 Identificador Unico Universal
 
 
+
+# JasperCommunityEdition
+
+## Ferramenta para layout e gerar PDF
