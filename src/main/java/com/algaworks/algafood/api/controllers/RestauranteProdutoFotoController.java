@@ -2,10 +2,12 @@ package com.algaworks.algafood.api.controllers;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.http.HttpHeaders;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
@@ -27,6 +29,8 @@ import com.algaworks.algafood.domain.model.Produto;
 import com.algaworks.algafood.domain.service.CadastroProdutoService;
 import com.algaworks.algafood.domain.service.CatalogoFotoProdutoService;
 import com.algaworks.algafood.domain.service.FotoStorageService;
+import com.algaworks.algafood.domain.service.FotoStorageService.FotoRecuperada;
+
 import jakarta.validation.Valid;
 
 
@@ -81,7 +85,7 @@ public class RestauranteProdutoFotoController {
     }
 
     @GetMapping
-    public ResponseEntity<InputStreamResource> servirFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId, 
+    public ResponseEntity<?> servirFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId, 
         @RequestHeader(name = "accept") String acceptHeader) throws HttpMediaTypeNotAcceptableException {
 
         try {
@@ -92,14 +96,22 @@ public class RestauranteProdutoFotoController {
 
                 verificarCompatibilidadeMediaType(mediaTypeFoto, mediaTypesAceitas);
             
-                InputStream inputStream = fotoStorageService.recuperar(fotoProduto.getNomeArquivo());
-            
-                return ResponseEntity.ok().contentType(mediaTypeFoto).body(new InputStreamResource(inputStream));
+                FotoRecuperada fotoRecuperada = fotoStorageService.recuperar(fotoProduto.getNomeArquivo());
+
+                if (fotoRecuperada.temUrl()) {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .header(org.springframework.http.HttpHeaders.LOCATION, fotoRecuperada.getUrl())
+                    .build();
+                } else {
+                    return ResponseEntity.ok()
+                    .contentType(mediaTypeFoto)
+                    .body(new InputStreamResource(fotoRecuperada.getInputStream()));
+                }
             
             } catch (EntidadeNaoEncontradaException e) {
                 return ResponseEntity.notFound().build();
             }
-        }
+    }
             
 
     private void verificarCompatibilidadeMediaType(MediaType mediaTypeFoto, List<MediaType> mediaTypesAceitas) throws HttpMediaTypeNotAcceptableException {
