@@ -9,6 +9,9 @@ import com.algaworks.algafood.core.storage.StorageProperties;
 import com.algaworks.algafood.domain.exception.StorageException;
 import com.algaworks.algafood.domain.service.FotoStorageService;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
+import com.amazonaws.services.s3.model.DeleteObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
@@ -33,12 +36,14 @@ public class S3FotoStorageService implements FotoStorageService {
         String caminhoArquivo = getCaminhoArquivo(novaFoto.getNomeArquivo());
         
         var objectMetaData = new ObjectMetadata();
+        objectMetaData.setContentType(novaFoto.getContentType());
 
         var putObjectRequest = new PutObjectRequest(
             storageProperties.getS3().getBucket(), 
             caminhoArquivo,
             novaFoto.getInputStream(),
-            objectMetaData);
+            objectMetaData)
+            .withCannedAcl(CannedAccessControlList.PublicRead);
 
             amazons3.putObject(putObjectRequest);
 
@@ -47,13 +52,22 @@ public class S3FotoStorageService implements FotoStorageService {
         }
     }
         
-        private String getCaminhoArquivo(String nomeArquivo) {
-            return String.format("%s/%s", storageProperties.getS3().getDiretorioFotos(), nomeArquivo);
-        }
+    private String getCaminhoArquivo(String nomeArquivo) {
+        return String.format("%s/%s", storageProperties.getS3().getDiretorioFotos(), nomeArquivo);
+    }
         
-            @Override
+    @Override
     public void remover(String nomeArquivo) {
-        
+        try {
+            String caminhoArquivo = getCaminhoArquivo(nomeArquivo);
+            
+            var deleteObjectRequest = new DeleteObjectRequest(storageProperties.getS3().getBucket(), caminhoArquivo);
+
+            amazons3.deleteObject(deleteObjectRequest);
+
+        } catch (Exception e) {
+            throw new StorageException("Não foi possível excluir arquivo na Amazon S3.", e);
+        }
     }
     
 }
