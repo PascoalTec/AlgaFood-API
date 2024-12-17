@@ -291,6 +291,24 @@ Metodo de CallBack JPA, ele é executado em alguns eventos do ciclo de vida da e
 Customiza uma serialização de objetos de acordo com uma View
 
 
+## @Singular
+
+Ele singulariza uma coleção
+
+
+## @NonNull
+
+#### Se por acaso não passar o assunto ou corpo, quando lançar o build ele vai retornar uma exception
+
+ex.:
+
+@NonNull
+private String assunto;
+        
+@NonNull
+private String corpo;
+
+
 # CRUD:
 
 #### CREATE - READ - UPDATE E DELETE
