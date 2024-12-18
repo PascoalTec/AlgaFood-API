@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.domain.AbstractAggregateRoot;
 
+import com.algaworks.algafood.domain.event.PedidoConfirmadoEvent;
 import com.algaworks.algafood.domain.exception.NegocioException;
 
 import jakarta.persistence.CascadeType;
@@ -28,10 +30,11 @@ import lombok.EqualsAndHashCode;
 
 
 
+@SuppressWarnings("rawtypes")
 @Entity
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Data
-public class Pedido {
+public class Pedido extends AbstractAggregateRoot {
     
     @Id
     @EqualsAndHashCode.Include
@@ -89,9 +92,12 @@ public class Pedido {
         getItens().forEach(item -> item.setPedido(this));
     }
 
+    @SuppressWarnings("unchecked")
     public void confirmar() {
         setStatus(StatusPedidoEnum.CONFIRMADO);
         setDataConfirmacao(OffsetDateTime.now());
+
+        registerEvent(new PedidoConfirmadoEvent(this));
     }
 
     public void entregar() {

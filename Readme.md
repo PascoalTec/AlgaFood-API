@@ -309,6 +309,10 @@ private String assunto;
 private String corpo;
 
 
+## @Slf4j
+
+Ele cria uma variavel log que dentro deste log você tem metodos que aparecem no console
+
 # CRUD:
 
 #### CREATE - READ - UPDATE E DELETE
@@ -384,3 +388,7 @@ Identificador Unico Universal
 # JasperCommunityEdition
 
 ## Ferramenta para layout e gerar PDF
+
+
+# DDD
+

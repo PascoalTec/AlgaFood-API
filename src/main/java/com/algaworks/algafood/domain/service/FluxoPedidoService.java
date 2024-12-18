@@ -1,11 +1,10 @@
 package com.algaworks.algafood.domain.service;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.algaworks.algafood.domain.model.Pedido;
-import com.algaworks.algafood.domain.service.EnvioEmailService.Mensagem;
+import com.algaworks.algafood.domain.repository.PedidoRepository;
 
 
 @Service
@@ -15,7 +14,8 @@ public class FluxoPedidoService {
     private EmissaoPedidoService emissaoPedidoService;
 
     @Autowired
-    private EnvioEmailService envioEmailService;
+    private PedidoRepository pedidoRepository;
+
 
     @Transactional
     public void confimar(String codigoPedido) {
@@ -23,13 +23,16 @@ public class FluxoPedidoService {
 
         pedido.confirmar();
 
-        var mensagem = Mensagem.builder()
-        .assunto(pedido.getRestaurante().getNome() + "- Pedido confirmado")
-        .corpo("O pedido de código <strong>" + pedido.getCodigo() + "</strong> foi confirmado!")
-        .destinatario(pedido.getCliente().getEmail())
-        .build();
+        pedidoRepository.save(pedido);
 
-        envioEmailService.enviar(mensagem);
+        // var mensagem = Mensagem.builder()
+        // .assunto(pedido.getRestaurante().getNome() + "- Pedido confirmado")
+        // .corpo("pedido-confirmado.html")
+        // .variavel("pedido", pedido)
+        // .destinatario(pedido.getCliente().getEmail())
+        // .build();
+
+        // envioEmailService.enviar(mensagem);
     }
 
 
