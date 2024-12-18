@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
+import com.algaworks.algafood.domain.event.PedidoCanceladoEvent;
 import com.algaworks.algafood.domain.event.PedidoConfirmadoEvent;
 import com.algaworks.algafood.domain.exception.NegocioException;
 
@@ -92,7 +93,7 @@ public class Pedido extends AbstractAggregateRoot {
         getItens().forEach(item -> item.setPedido(this));
     }
 
-    @SuppressWarnings("unchecked")
+    
     public void confirmar() {
         setStatus(StatusPedidoEnum.CONFIRMADO);
         setDataConfirmacao(OffsetDateTime.now());
@@ -108,6 +109,8 @@ public class Pedido extends AbstractAggregateRoot {
     public void cancelar() {
         setStatus(StatusPedidoEnum.CANCELADO);
         setDataCancelamento(OffsetDateTime.now());
+
+        registerEvent(new PedidoCanceladoEvent(this));
     }
 
     private void setStatus(StatusPedidoEnum novoStatus) {

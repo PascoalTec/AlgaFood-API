@@ -24,15 +24,6 @@ public class FluxoPedidoService {
         pedido.confirmar();
 
         pedidoRepository.save(pedido);
-
-        // var mensagem = Mensagem.builder()
-        // .assunto(pedido.getRestaurante().getNome() + "- Pedido confirmado")
-        // .corpo("pedido-confirmado.html")
-        // .variavel("pedido", pedido)
-        // .destinatario(pedido.getCliente().getEmail())
-        // .build();
-
-        // envioEmailService.enviar(mensagem);
     }
 
 
@@ -41,6 +32,8 @@ public class FluxoPedidoService {
         Pedido pedido = emissaoPedidoService.buscarOuFalhar(codigoPedido);
 
         pedido.cancelar();
+
+        pedidoRepository.save(pedido);
     }
 
     @Transactional

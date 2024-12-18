@@ -313,6 +313,17 @@ private String corpo;
 
 Ele cria uma variavel log que dentro deste log você tem metodos que aparecem no console
 
+
+## @EventListener
+
+Essa anotação marca um metodo como um listener de eventos, ou seja, um metodo que está interessado realmente sempre que o evento for disparado
+na aplicação
+
+
+## @TranscationalEventListener
+
+Com esta anotação, especificamos qual que é a fase específica destes eventos disparados, por padrão se botarmos o EventListener, será disparado após a transação for comitada
+
 # CRUD:
 
 #### CREATE - READ - UPDATE E DELETE
