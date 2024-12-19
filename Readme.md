@@ -324,6 +324,16 @@ na aplicação
 
 Com esta anotação, especificamos qual que é a fase específica destes eventos disparados, por padrão se botarmos o EventListener, será disparado após a transação for comitada
 
+
+## @CrossOrigin
+
+Ela pode ser incluida ou na classe inteira ou apenas no metodo
+
+ele tem algumas propriedades
+
+ex.: @CrossOrigins(origins = "http://localhost:8000" ) é um array de string, o padrão para permitir tudo, já é o "*" para qualquer chamada http, mas caso queira especificar, você pode botar como está acima
+
+
 # CRUD:
 
 #### CREATE - READ - UPDATE E DELETE
