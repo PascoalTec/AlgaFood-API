@@ -411,5 +411,21 @@ Identificador Unico Universal
 ## Ferramenta para layout e gerar PDF
 
 
-# DDD
+
+
+# ETags:
+
+Gerenciamento de Cache para melhor uso da aplicação
+
+
+ex.: return ResponseEntity.ok().cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS).cachePrivate()).body(formaPagamentoModel);
+
+
+.cacheControl() -> determina o tempo do STALE no cache
+
+.cachePrivate() -> para privar as informações do usuário no cache
+
+.cacheControl(CacheControl.noCache()) -> não tem validação
+
+.cacheControl(CacheControl.noStore()) -> não pode armazenar no Store
 
