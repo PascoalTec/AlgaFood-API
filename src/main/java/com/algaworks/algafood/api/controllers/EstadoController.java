@@ -2,6 +2,7 @@ package com.algaworks.algafood.api.controllers;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,6 @@ import com.algaworks.algafood.api.model.input.EstadoInput;
 import com.algaworks.algafood.domain.model.Estado;
 import com.algaworks.algafood.domain.repository.EstadoRepository;
 import com.algaworks.algafood.domain.service.CadastroEstadoService;
-
 import jakarta.validation.Valid;
 
 
@@ -39,10 +39,13 @@ public class EstadoController {
     @Autowired
     private EstadoInputDisassembler estadoInputDisassembler;
 
+    
     @GetMapping
-    public List<Estado> listar(){
-        return estadoRepository.findAll();
-    }
+    public CollectionModel<EstadoModel> listar() {
+        List<Estado> todosEstados = estadoRepository.findAll();
+    
+        return estadoModelAssembler.toCollectionModel(todosEstados);
+}
 
 
     @GetMapping("/{estadoId}")
