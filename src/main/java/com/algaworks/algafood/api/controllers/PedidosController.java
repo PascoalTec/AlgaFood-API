@@ -78,9 +78,9 @@ public class PedidosController {
 
     @GetMapping
     public PagedModel<PedidoResumoModel> pesquisar(PedidoFilter filtro,  @PageableDefault(size = 10) Pageable pageable) {
-        pageable = traduzirPageable(pageable);
+        Pageable pageableTraduzido = traduzirPageable(pageable);
 
-        Page<Pedido> pedidosPage = pedidoRepository.findAll(PedidoSpecs.usandoFiltro(filtro), pageable);
+        Page<Pedido> pedidosPage = pedidoRepository.findAll(PedidoSpecs.usandoFiltro(filtro), pageableTraduzido);
         
         return pagedResourcesAssembler.toModel(pedidosPage, pedidoResumoModelAssembler);
     }
@@ -113,9 +113,15 @@ public class PedidosController {
     private Pageable traduzirPageable(Pageable apiPageable) {
         var mapeamento = ImmutableMap.of(
         "codigo", "codigo",
+        "subtotal", "subtotal",
+        "taxaFrete", "taxaFrete",
+        "valorTotal", "valorTotal",
+        "dataCriacao", "dataCriacao",
         "restaurante.nome", "restaurante.nome",
-        "nomeCliente", "cliente.nome",
-        "valorTotal", "valorTotal"
+        "restaurante.id", "restaurante,id",
+        "cliente.id", "cliente.id",
+        "cliente.nome", "cliente.nome"
+        
         );
 
         return PageableTranslator.translate(apiPageable, mapeamento);

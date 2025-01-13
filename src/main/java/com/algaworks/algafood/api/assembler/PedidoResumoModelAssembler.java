@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Component;
+
+import com.algaworks.algafood.api.AlgaLinks;
 import com.algaworks.algafood.api.controllers.PedidosController;
 import com.algaworks.algafood.api.controllers.RestauranteController;
 import com.algaworks.algafood.api.controllers.UsuarioController;
@@ -20,6 +22,9 @@ public class PedidoResumoModelAssembler extends RepresentationModelAssemblerSupp
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private AlgaLinks algaLinks;
     
     public PedidoResumoModelAssembler() {
         super(PedidosController.class, PedidoResumoModel.class);
@@ -29,12 +34,12 @@ public class PedidoResumoModelAssembler extends RepresentationModelAssemblerSupp
         PedidoResumoModel pedidoModel = createModelWithId(pedido.getCodigo(), pedido);
         modelMapper.map(pedido, pedidoModel);
 
-        pedidoModel.add(WebMvcLinkBuilder.linkTo(PedidosController.class).withRel("pedidos"));
+        pedidoModel.add(algaLinks.linkToPedidos());
 
-        pedidoModel.getRestaurante().add(linkTo(methodOn(RestauranteController.class).buscar(pedido.getRestaurante().getId())).withSelfRel());
+        pedidoModel.getRestaurante().add(algaLinks.linkToRestaurante(pedido.getRestaurante().getId()));
 
         pedidoModel.getCliente()
-            .add(WebMvcLinkBuilder.linkTo(methodOn(UsuarioController.class).buscar(pedido.getCliente().getId())).withSelfRel());
+            .add(algaLinks.linkToUsuario(pedido.getCliente().getId()));
 
         return pedidoModel;
     

@@ -6,9 +6,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
+import com.algaworks.algafood.api.AlgaLinks;
 import com.algaworks.algafood.api.controllers.CidadeController;
 import com.algaworks.algafood.api.controllers.FormaPagamentoController;
 import com.algaworks.algafood.api.controllers.PedidosController;
+import com.algaworks.algafood.api.controllers.RestauranteController;
 import com.algaworks.algafood.api.controllers.RestauranteProdutoController;
 import com.algaworks.algafood.api.controllers.UsuarioController;
 import com.algaworks.algafood.api.model.PedidoModel;
@@ -19,6 +21,9 @@ public class PedidoModelAssembler extends RepresentationModelAssemblerSupport<Pe
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private AlgaLinks algaLinks;
     
 
     public PedidoModelAssembler() {
@@ -29,22 +34,23 @@ public class PedidoModelAssembler extends RepresentationModelAssemblerSupport<Pe
         PedidoModel pedidoModel = createModelWithId(pedido.getCodigo(), pedido);
         modelMapper.map(pedido, pedidoModel);
 
-        pedidoModel.add(linkTo(methodOn(UsuarioController.class).buscar(pedido.getFormaPagamento().getId())).withSelfRel());
+        pedidoModel.add(algaLinks.linkToPedidos());
 
-        pedidoModel.getCliente()
-            .add(linkTo(methodOn(UsuarioController.class).buscar(pedido.getCliente().getId())).withSelfRel());
+        pedidoModel.getRestaurante().add(
+            algaLinks.linkToRestaurante(pedido.getRestaurante().getId()));
 
-        // Passamos null no segundo argumento, porque é indiferente para a construção da URL do recurso de forma de pagamento.
-        pedidoModel.getFormaPagamento()
-            .add(linkTo(methodOn(FormaPagamentoController.class).buscar(pedido.getFormaPagamento().getId(), null)).withSelfRel());
+        pedidoModel.getCliente().add(
+            algaLinks.linkToUsuario(pedido.getCliente().getId()));
 
-        // Não é necessario usar o WebMvcLinkBuilder, por que a nossa IDE já busca o linkTo para gente
-        pedidoModel.getEnderecoEntrega().getCidade()
-            .add(linkTo(methodOn(CidadeController.class).buscar(pedido.getEnderecoEntrega().getCidade().getId())).withSelfRel());
+        pedidoModel.getFormaPagamento().add(
+            algaLinks.linkToFormaPagamento(pedido.getFormaPagamento().getId()));
+
+        pedidoModel.getEnderecoEntrega().getCidade().add(
+            algaLinks.linkToCidade(pedido.getEnderecoEntrega().getCidade().getId()));
 
         pedidoModel.getItens().forEach(item -> {
-            item.add(linkTo(methodOn(RestauranteProdutoController.class)
-                .buscar(pedidoModel.getRestaurante().getId(), item.getProdutoId())).withRel("produto"));
+            item.add(algaLinks.linkToProduto(
+                pedidoModel.getRestaurante().getId(), item.getProdutoId(), "produto"));
         });
 
         return pedidoModel;

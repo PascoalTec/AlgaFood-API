@@ -1,6 +1,5 @@
 package com.algaworks.algafood.api.assembler;
 
-import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
@@ -8,6 +7,7 @@ import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSuppor
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Component;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import com.algaworks.algafood.api.AlgaLinks;
 import com.algaworks.algafood.api.controllers.CidadeController;
 import com.algaworks.algafood.api.controllers.EstadoController;
 import com.algaworks.algafood.api.model.CidadeModel;
@@ -19,30 +19,25 @@ public class CidadeModelAssembler extends RepresentationModelAssemblerSupport<Ci
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private AlgaLinks algaLinks;
+
     public CidadeModelAssembler() {
         super(CidadeController.class, CidadeModel.class);
     }
 
     @Override
     public CidadeModel toModel(Cidade cidade) {
-        CidadeModel cidadeModel = modelMapper.map(cidade, CidadeModel.class);
-
-        cidadeModel.add(WebMvcLinkBuilder.linkTo(methodOn(CidadeController.class)
-				.buscar(cidadeModel.getId())).withSelfRel());
-
-        cidadeModel.add(WebMvcLinkBuilder.linkTo(methodOn(CidadeController.class).listar()).withRel("cidades"));
-
-        cidadeModel.getEstado().add(WebMvcLinkBuilder.linkTo(methodOn(EstadoController.class)
-            .buscar(cidadeModel.getEstado().getId())).withSelfRel());
+        CidadeModel cidadeModel = createModelWithId(cidade.getId(), cidade);
+    
+        modelMapper.map(cidade, cidadeModel);
+    
+        cidadeModel.add(algaLinks.linkToCidades("cidades"));
+    
+        cidadeModel.getEstado().add(algaLinks.linkToEstado(cidadeModel.getEstado().getId()));
 
         return cidadeModel;
     }
-
-    @Override
-    public CollectionModel<CidadeModel> toCollectionModel(Iterable<? extends Cidade> entities) {
-        return super.toCollectionModel(entities).add(WebMvcLinkBuilder.linkTo(CidadeController.class).withSelfRel());
-    }
-
 
     // já temos o toCollectionModel, não preciamos mais implementar ele
 }
