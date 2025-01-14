@@ -39,5 +39,9 @@ public class CidadeModelAssembler extends RepresentationModelAssemblerSupport<Ci
         return cidadeModel;
     }
 
-    // já temos o toCollectionModel, não preciamos mais implementar ele
+    @Override
+    public CollectionModel<CidadeModel> toCollectionModel(Iterable<? extends Cidade> entities) {
+        return super.toCollectionModel(entities)
+                .add(algaLinks.linkToCidades());
+    }
 }

@@ -41,7 +41,7 @@ public class RestauranteUsuarioResponsavelController {
 
         return usuarioModelAssembler.toCollectionModel(restaurante.getResponsaveis())
             .removeLinks()
-            .add(algaLinks.linkToResponsaveisRestaurante(restauranteId));
+            .add(algaLinks.linkToRestauranteResponsaveis(restauranteId));
     }
 
 
