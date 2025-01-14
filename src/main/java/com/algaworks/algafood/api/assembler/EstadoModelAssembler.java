@@ -1,14 +1,10 @@
 package com.algaworks.algafood.api.assembler;
 
-import java.util.List;
-import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Component;
-
 import com.algaworks.algafood.api.AlgaLinks;
 import com.algaworks.algafood.api.controllers.EstadoController;
 import com.algaworks.algafood.api.model.EstadoModel;
