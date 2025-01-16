@@ -3,6 +3,7 @@ package com.algaworks.algafood.api.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.RepresentationModel;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpHeaders;
+
+import com.algaworks.algafood.api.AlgaLinks;
 import com.algaworks.algafood.domain.filter.VendaDiariaFilter;
 import com.algaworks.algafood.domain.model.dto.VendaDiaria;
 import com.algaworks.algafood.domain.service.VendaQueryService;
@@ -25,6 +28,22 @@ public class EstatisticasController {
     @Autowired
 	private VendaReportService vendaReportService;
 
+	@Autowired
+	private AlgaLinks algaLinks;
+
+	public static class EstatisticasModel extends RepresentationModel<EstatisticasModel> {
+	}
+
+	
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	public EstatisticasModel estatisticas() {
+    	var estatisticasModel = new EstatisticasModel();
+    
+    	estatisticasModel.add(algaLinks.linkToEstatisticasVendasDiarias("vendas-diarias"));
+    
+    	return estatisticasModel;
+	}
+	
     @GetMapping(path = "/vendas-diarias", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<VendaDiaria> consultarVendasDiarias(VendaDiariaFilter filtro, String timeOffset) {
         return vendaQueryService.consultarVendasDiarias(filtro, timeOffset);
