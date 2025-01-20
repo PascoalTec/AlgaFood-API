@@ -30,7 +30,7 @@ import jakarta.validation.Valid;
 
 
 @RestController
-@RequestMapping("/formas-pagamento")
+@RequestMapping("/v1/formas-pagamento")
 public class FormaPagamentoController {
     
     @Autowired

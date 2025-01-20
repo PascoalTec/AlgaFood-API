@@ -14,7 +14,7 @@ import com.algaworks.algafood.domain.service.FluxoPedidoService;
 
 
 @RestController
-@RequestMapping(value = "/pedidos/{codigoPedido}")
+@RequestMapping(value = "/v1/pedidos/{codigoPedido}")
 public class FluxoPedidoController {
     
     @Autowired

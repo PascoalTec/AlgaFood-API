@@ -34,7 +34,7 @@ import jakarta.validation.Valid;
 
 
 @RestController
-@RequestMapping("/pedidos")
+@RequestMapping("/v1/pedidos")
 public class PedidosController {
     
     @Autowired

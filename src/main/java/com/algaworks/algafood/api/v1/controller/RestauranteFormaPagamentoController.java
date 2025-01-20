@@ -21,7 +21,7 @@ import com.algaworks.algafood.domain.service.CadastroRestauranteService;
 
 
 @RestController
-@RequestMapping("/restaurantes/{restauranteId}/formas-pagamento")
+@RequestMapping("/v1/restaurantes/{restauranteId}/formas-pagamento")
 public class RestauranteFormaPagamentoController {
 
     @Autowired

@@ -27,7 +27,7 @@ import jakarta.validation.Valid;
 
 
 @RestController
-@RequestMapping("/cozinha")
+@RequestMapping(path = "/v1/cozinha")
 public class CozinhaController {
     
     @Autowired

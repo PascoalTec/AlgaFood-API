@@ -30,7 +30,7 @@ import jakarta.validation.Valid;
 
 
 @RestController
-@RequestMapping("/restaurantes/{restauranteId}/produtos")
+@RequestMapping("/v1/restaurantes/{restauranteId}/produtos")
 public class ProdutoController {
     
     @Autowired

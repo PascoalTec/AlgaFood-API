@@ -4,6 +4,7 @@ import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import com.algaworks.algafood.api.v2.controller.CidadeControllerV2;
+import com.algaworks.algafood.api.v2.controller.CozinhaControllerV2;
 
 
 public class AlgaLinksV2 {
@@ -16,4 +17,11 @@ public class AlgaLinksV2 {
         return linkToCidades(IanaLinkRelations.SELF.value());
     }
 
+    public Link linkToCozinhas(String rel) {
+        return WebMvcLinkBuilder.linkTo(CozinhaControllerV2.class).withRel(rel);
+    }
+    
+    public Link linkToCozinhas() {
+        return linkToCozinhas(IanaLinkRelations.SELF.value());
+    }
 }
