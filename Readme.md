@@ -429,3 +429,44 @@ ex.: return ResponseEntity.ok().cacheControl(CacheControl.maxAge(10, TimeUnit.SE
 
 .cacheControl(CacheControl.noStore()) -> não pode armazenar no Store
 
+
+
+# LogBack e Slf4j
+
+LogBack é o sucessor do Slf4j
+
+podemos incluir na classe a anotação @Sl4fj ou implementar deste forma: 
+
+@Sl4fj -> cria o código abaixo e ao invés da variável ser logger, será log
+
+ex.: private static final Logger logger = LoggerFactory.getLogger(CozinhaController.class);
+
+
+appender de mensagems de log (loggly)
+
+appender -> é um componente que tem a função que escreve os logs em algum lugar (arquivo, console, webservice)
+
+
+usaremos um appender já criado, injetando em uma dependencia
+
+
+logback-spring.xml -> o spring boot já encontra este arquivo
+
+
+
+# OAuth 2.0
+
+
+### É um framework de autorização para permitir de aplicações terceiras obtenham acesso limitado a serviços (uma API)
+
+
+### Resource Server (REST API) -> Ele é um servidor que hospeda os recursos protegidos, no caso da algafood são os (pedidos, restaurantes, etc..)
+
+
+### Resource Owner -> Ele representa o usuário final
+
+
+### Client -> Pode ser uma aplicação Web, o interesse dessa aplicação é acessar os interesses do Resource Server, mas para ele conseguir acesso o Resource Owner tem que autoriza-lo
+
+
+### Authorization Server -> Servidor que autentica o Resource Owner e ele que garante uma autorização de acesso para um determinado cliente para acessar o Resource Server

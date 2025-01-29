@@ -5,6 +5,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.TemplateVariable;
 import org.springframework.hateoas.TemplateVariable.VariableType;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.stereotype.Component;
 import com.algaworks.algafood.api.v1.controller.CidadeController;
 import com.algaworks.algafood.api.v1.controller.CozinhaController;
 import com.algaworks.algafood.api.v1.controller.EstadoController;
@@ -27,7 +28,7 @@ import org.springframework.hateoas.UriTemplate;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-
+@Component
 public class AlgaLinks {
     
     public static final TemplateVariables PAGINACAO_VARIABLES = new TemplateVariables(new TemplateVariable("page", VariableType.REQUEST_PARAM),

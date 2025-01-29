@@ -1,5 +1,6 @@
 package com.algaworks.algafood.api.v1.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -7,6 +8,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,10 +26,12 @@ import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.repository.CozinhaRepository;
 import com.algaworks.algafood.domain.service.CadastroCozinhaService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 
 
+@Slf4j
 @RestController
-@RequestMapping(path = "/v1/cozinha")
+@RequestMapping(path = "/v1/cozinha", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CozinhaController {
     
     @Autowired
@@ -45,8 +49,15 @@ public class CozinhaController {
     @Autowired
     private PagedResourcesAssembler<Cozinha> pagedResourcesAssembler;
 
+    
     @GetMapping
     public PagedModel<CozinhaModel> listar(@PageableDefault(size = 10) Pageable pageable){
+        log.info("Consultando cozinhas com páginas de {} registros..", pageable.getPageSize());
+
+        if (true) {
+            throw new RuntimeException("Teste de exception");
+        }
+        
         Page<Cozinha> cozinhasPage = cozinhaRepository.findAll(pageable);
 
        PagedModel<CozinhaModel> cozinhasModelPage = pagedResourcesAssembler.toModel(cozinhasPage, cozinhaModelAssembler);
