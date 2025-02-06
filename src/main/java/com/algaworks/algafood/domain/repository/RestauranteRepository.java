@@ -23,4 +23,7 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Long> 
     Optional<Restaurante> findFirstRestauranteByNomeContaining(String nome);
 
     int countByCozinhaId(Long cozinha);
+
+    
+    boolean existsResponsavel(Long restauranteId, Long usuarioId);
 } 

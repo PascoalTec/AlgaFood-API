@@ -34,6 +34,11 @@
 		<springfox.version>3.0.0</springfox.version>
 		<logback-ext-loggly.version>0.1.5</logback-ext-loggly.version>
 		<oauth2-oidc-sdk.version>6.21.2</oauth2-oidc-sdk.version>
+		<spring-security-oauth2.version>2.5.2.RELEASE</spring-security-oauth2.version>
+		<jaxb-core.version>4.0.1</jaxb-core.version>
+		<spring-security-jwt.version>1.0.11.RELEASE</spring-security-jwt.version>
+		<springauthserver.version>0.3.1</springauthserver.version>
+		<dockerfile-maven-version>1.4.13</dockerfile-maven-version>
 	</properties>
 	
 	<dependencies>
@@ -160,6 +165,35 @@
 			<version>${oauth2-oidc-sdk.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.security.oauth</groupId>
+			<artifactId>spring-security-oauth2</artifactId>
+			<version>${spring-security-oauth2.version}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-jwt</artifactId>
+			<version>${spring-security-jwt.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-core</artifactId>
+			<version>${jaxb-core.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-authorization-server</artifactId>
+			<version>${springauthserver.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -173,4 +207,35 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>docker</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.spotify</groupId>
+							<artifactId>dockerfile-maven-plugin</artifactId>
+								<version>${dockerfile-maven-version}</version>
+					<executions>
+					<execution>
+						<id>default</id>
+					<goals>
+						<goal>build</goal>
+						<goal>push</goal>
+						</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<repository>spotify/foobar</repository>
+						<tag>${project.version}</tag>
+					<buildArgs>
+						<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+						</buildArgs>
+						</configuration>
+						</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

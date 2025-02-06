@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.algaworks.algafood.api.v1.model.input.GrupoInput;
+import com.algaworks.algafood.core.security.CheckSecurity;
 import com.algaworks.algafood.api.v1.assembler.GrupoInputDisassembler;
 import com.algaworks.algafood.api.v1.assembler.GrupoModelAssembler;
 import com.algaworks.algafood.api.v1.model.GrupoModel;
@@ -42,6 +42,7 @@ public class GrupoController {
     private GrupoInputDisassembler grupoInputDisassembler;
 
 
+    @CheckSecurity.UsuariosGruposPermissoes.PodeConsultar
     @GetMapping
     public CollectionModel<GrupoModel> listar() {
         List<Grupo> todosGrupos =  grupoRepository.findAll();
@@ -49,6 +50,8 @@ public class GrupoController {
         return grupoModelAssembler.toCollectionModel(todosGrupos);
     }
 
+
+    @CheckSecurity.UsuariosGruposPermissoes.PodeConsultar
     @GetMapping("/{grupoId}")
     public GrupoModel buscar(@PathVariable Long grupoId){
         Grupo grupo = cadastroGrupoService.buscarOuFalhar(grupoId);
@@ -56,6 +59,8 @@ public class GrupoController {
         return grupoModelAssembler.toModel(grupo);
     }
 
+
+    @CheckSecurity.UsuariosGruposPermissoes.PodeEditar
     @PostMapping
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
@@ -67,6 +72,8 @@ public class GrupoController {
         return grupoModelAssembler.toModel(grupo);
     }
 
+
+    @CheckSecurity.UsuariosGruposPermissoes.PodeEditar
     @PutMapping("/{grupoId}")
     public GrupoModel atualizar(@PathVariable Long grupoId, @RequestBody @Valid GrupoInput grupoInput) {
         Grupo grupoAtual = cadastroGrupoService.buscarOuFalhar(grupoId);
@@ -78,6 +85,8 @@ public class GrupoController {
         return grupoModelAssembler.toModel(grupoAtual);
     }
 
+
+    @CheckSecurity.UsuariosGruposPermissoes.PodeEditar
     @DeleteMapping("/{grupoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void excluir(@PathVariable Long grupoId) {

@@ -2,6 +2,7 @@ package com.algaworks.algafood.core.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,12 +17,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 public class ResourceServerConfig {
 
-    @Bean
+    
+    @SuppressWarnings("removal")
+	@Bean
     public SecurityFilterChain resourceServerFilterChain(HttpSecurity http) throws Exception {
         http.formLogin(Customizer.withDefaults())
             .csrf().disable()
@@ -55,4 +59,9 @@ public class ResourceServerConfig {
         return converter;
     }
 
+
+	@Bean
+	protected AuthenticationManager authenticationManager() throws Exception {
+		return authenticationManager();
+	}
 }

@@ -334,6 +334,16 @@ ele tem algumas propriedades
 ex.: @CrossOrigins(origins = "http://localhost:8000" ) é um array de string, o padrão para permitir tudo, já é o "*" para qualquer chamada http, mas caso queira especificar, você pode botar como está acima
 
 
+
+## @PostAthorize
+
+O Post, ele deixa o metodo ser executado e faz a checagem dos parametros depois do metodo ser chamado, só é usado o Post quando o metodo não tem efeito colateral
+
+## @PreAuthorize
+
+antes da execução do metodo, ele checa os parametros
+
+
 # CRUD:
 
 #### CREATE - READ - UPDATE E DELETE

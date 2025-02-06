@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.algaworks.algafood.api.v1.model.input.EstadoInput;
+import com.algaworks.algafood.core.security.CheckSecurity;
 import com.algaworks.algafood.api.v1.assembler.EstadoInputDisassembler;
 import com.algaworks.algafood.api.v1.assembler.EstadoModelAssembler;
 import com.algaworks.algafood.api.v1.model.EstadoModel;
@@ -40,6 +41,7 @@ public class EstadoController {
     private EstadoInputDisassembler estadoInputDisassembler;
 
     
+    @CheckSecurity.Cidades.PodeConsultar
     @GetMapping
     public CollectionModel<EstadoModel> listar() {
         List<Estado> todosEstados = estadoRepository.findAll();
@@ -48,11 +50,14 @@ public class EstadoController {
 }
 
 
+    @CheckSecurity.Cidades.PodeConsultar
     @GetMapping("/{estadoId}")
     public Estado buscar(@PathVariable Long estadoId) {
         return cadastroEstadoService.buscarOuFalhar(estadoId);
     }
 
+
+    @CheckSecurity.Cidades.PodeEditar
     @PostMapping
     // @Transactional
     @ResponseStatus(HttpStatus.CREATED)
@@ -65,6 +70,7 @@ public class EstadoController {
     }
 
 
+    @CheckSecurity.Cidades.PodeEditar
     @PutMapping("/{estadoId}")
     public Estado atualizar(@PathVariable Long estadoId, @RequestBody @Valid EstadoInput estadoInput) {
         Estado estadoAtual = cadastroEstadoService.buscarOuFalhar(estadoId);
@@ -78,6 +84,7 @@ public class EstadoController {
         
     }
 
+    @CheckSecurity.Cidades.PodeEditar
     @DeleteMapping("/{estadoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void excluir(@PathVariable Long estadoId) {
