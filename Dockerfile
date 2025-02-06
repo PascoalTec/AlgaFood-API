@@ -9,6 +9,9 @@ ARG JAR_FILE
 
 # instrução
 COPY target/${JAR_FILE} /app/api.jar
+COPY wait-for-it.sh /wait-for-it.sh
+
+RUN chmod +x /wait-for-it.sh
 
 # informa qual porta o container vai escutar quando ele tiver rodando
 EXPOSE 8080

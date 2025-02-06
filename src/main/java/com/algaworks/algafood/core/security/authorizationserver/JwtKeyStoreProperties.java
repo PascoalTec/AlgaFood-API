@@ -6,6 +6,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +17,7 @@ import lombok.Setter;
 @ConfigurationProperties("algafood.jwt.keystore")
 public class JwtKeyStoreProperties {
 
-    @NotBlank
+    @NotNull
     private Resource jksLocation;
     
     @NotBlank

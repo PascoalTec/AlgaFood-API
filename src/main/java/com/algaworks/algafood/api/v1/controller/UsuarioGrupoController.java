@@ -10,11 +10,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.algaworks.algafood.api.v1.AlgaLinks;
 import com.algaworks.algafood.api.v1.assembler.GrupoModelAssembler;
 import com.algaworks.algafood.api.v1.model.GrupoModel;
-import com.algaworks.algafood.core.security.AlgaSecurity;
 import com.algaworks.algafood.core.security.CheckSecurity;
 import com.algaworks.algafood.domain.model.Usuario;
 import com.algaworks.algafood.domain.service.CadastroUsuarioService;
@@ -28,12 +25,6 @@ public class UsuarioGrupoController {
     
     @Autowired
     private GrupoModelAssembler grupoModelAssembler;
-
-    @Autowired
-    private AlgaSecurity algaSecurity;
-
-    @Autowired
-    private AlgaLinks algaLinks;
 
 
     @CheckSecurity.UsuariosGruposPermissoes.PodeConsultar

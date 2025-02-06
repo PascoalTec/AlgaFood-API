@@ -14,8 +14,15 @@ services:
     networks:
       - algafood-network
 
+  algafood-redis:
+    image: redis:6.2.1-alpine
+    networks:
+      - algafood-network
+    
+
   algafood-api:
     image: algafood-api
+    command: ["/wait-for-it.sh", "algafood-mysql:3306", "-t", "30", "--", "java", "-jar", "api.jar"]
     environment:
       - DB_HOST: algafood-msql
   ports:
@@ -24,3 +31,14 @@ services:
     - algafood-network
   depends_on:
     - algafood-mysql
+  
+algafood-proxy:
+  build: ./nginx
+  image: algafood-proxy
+  ports:
+  - "80:80"
+  networks:
+    - algafood-network
+  depends_on:
+    algafood-api
+  
