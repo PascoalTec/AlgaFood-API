@@ -80,20 +80,20 @@ public class AuthorizationServerConfig {
         );
     }
 
-    @Bean
-    public JWKSource<SecurityContext> jwkSource(JwtKeyStoreProperties properties) throws Exception {
-        char[] keyStorePass = properties.getPassword().toCharArray();
-        String keypairAlias = properties.getKeypairAlias();
+    // @Bean
+    // public JWKSource<SecurityContext> jwkSource(JwtKeyStoreProperties properties) throws Exception {
+    //     char[] keyStorePass = properties.getPassword().toCharArray();
+    //     String keypairAlias = properties.getKeypairAlias();
 
-        Resource jksLocation = properties.getJksLocation();
-        InputStream inputStream = jksLocation.getInputStream();
-        KeyStore keyStore = KeyStore.getInstance("JKS");
-        keyStore.load(inputStream, keyStorePass);
+    //     Resource jksLocation = properties.getJksLocation();
+    //     InputStream inputStream = jksLocation.getInputStream();
+    //     KeyStore keyStore = KeyStore.getInstance("JKS");
+    //     keyStore.load(inputStream, keyStorePass);
 
-        RSAKey rsaKey = RSAKey.load(keyStore, keypairAlias, keyStorePass);
+    //     RSAKey rsaKey = RSAKey.load(keyStore, keypairAlias, keyStorePass);
 
-        return new ImmutableJWKSet<>(new JWKSet(rsaKey));
-    }
+    //     return new ImmutableJWKSet<>(new JWKSet(rsaKey));
+    // }
 
     @Bean
     public OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer(UsuarioRepository usuarioRepository) {

@@ -31,14 +31,12 @@
 		<modelmapper.version>3.1.0</modelmapper.version>
 		<jasperreports.version>6.20.0</jasperreports.version>
 		<aws-java-sdk-s3.version>1.12.779</aws-java-sdk-s3.version>
-		<springfox.version>3.0.0</springfox.version>
 		<logback-ext-loggly.version>0.1.5</logback-ext-loggly.version>
 		<oauth2-oidc-sdk.version>6.21.2</oauth2-oidc-sdk.version>
-		<spring-security-oauth2.version>2.5.2.RELEASE</spring-security-oauth2.version>
 		<jaxb-core.version>4.0.1</jaxb-core.version>
-		<spring-security-jwt.version>1.0.11.RELEASE</spring-security-jwt.version>
 		<springauthserver.version>0.3.1</springauthserver.version>
 		<dockerfile-maven-version>1.4.13</dockerfile-maven-version>
+		<springdoc.version>1.6.9</springdoc.version>
 	</properties>
 	
 	<dependencies>
@@ -131,12 +129,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-freemarker</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-boot-starter</artifactId>
-			<version>${springfox.version}</version>
-		</dependency>
 <!-- HATEOAS -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -166,19 +158,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.security.oauth</groupId>
-			<artifactId>spring-security-oauth2</artifactId>
-			<version>${spring-security-oauth2.version}</version>
-		</dependency>
-
-
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-jwt</artifactId>
-			<version>${spring-security-jwt.version}</version>
-		</dependency>
-
-		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-core</artifactId>
 			<version>${jaxb-core.version}</version>
@@ -187,6 +166,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.session</groupId>
+			<artifactId>spring-session-data-redis</artifactId>
 		</dependency>
 
 		<dependency>
@@ -202,6 +186,24 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-oauth2-client</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>${springdoc.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-hateoas</artifactId>
+			<version>${springdoc.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-security</artifactId>
+			<version>${springdoc.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -247,5 +249,4 @@
 			</build>
 		</profile>
 	</profiles>
-
 </project>
