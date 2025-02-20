@@ -1,4 +1,4 @@
-package com.algaworks.algafood.infrastructure.config;
+package com.algaworks.algafood.core.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

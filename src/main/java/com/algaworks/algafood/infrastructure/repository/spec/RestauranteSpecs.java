@@ -1,4 +1,4 @@
-package com.algaworks.algafood.infrastructure.spec;
+package com.algaworks.algafood.infrastructure.repository.spec;
 
 import java.math.BigDecimal;
 import org.springframework.data.jpa.domain.Specification;

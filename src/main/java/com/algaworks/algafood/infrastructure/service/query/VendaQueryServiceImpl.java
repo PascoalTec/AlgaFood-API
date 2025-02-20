@@ -43,7 +43,7 @@ public class VendaQueryServiceImpl implements VendaQueryService {
         );
 
         if (filtro.getRestauranteId() != null) {
-			predicates.add(builder.equal(root.get("restaurante"), filtro.getRestauranteId()));
+			predicates.add(builder.equal(root.get("restaurante").get("id"), filtro.getRestauranteId()));
 		}
 	      
 		if (filtro.getDataCriacaoInicio() != null) {

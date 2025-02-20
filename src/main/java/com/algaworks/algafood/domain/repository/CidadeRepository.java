@@ -9,5 +9,5 @@ import com.algaworks.algafood.domain.model.Cidade;
 @Repository
 public interface CidadeRepository extends JpaRepository<Cidade, Long> {
     
-    
+    void remover(Long id);
 }

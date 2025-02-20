@@ -55,21 +55,12 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 
-	@Override
-	protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatusCode status,
-			WebRequest request) {
-
-		return handleValidationInternal(ex, headers, status, request, ex.getBindingResult());
-	}
-
-
-
 	@ExceptionHandler({ ValidacaoException.class })
 	public ResponseEntity<Object> handleValidacaoException(ValidacaoException ex, WebRequest request) {
 
-    return handleValidationInternal(ex, ex.getBindingResult(), new HttpHeaders(),HttpStatus.BAD_REQUEST, request);
+    	return handleValidationInternal(ex, ex.getBindingResult(), new HttpHeaders(),HttpStatus.BAD_REQUEST, request);
 
-}
+	}
 
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
@@ -324,7 +315,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 			if (body == null) {
 				body = Problem.builder()
 						.timeStamp(OffsetDateTime.now())
-						.title("title")
+						.title(HttpStatus.valueOf(status.value()).getReasonPhrase())
 						.status(status.value())
 						.userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL)
 						.build();

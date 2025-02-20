@@ -10,4 +10,5 @@ import com.algaworks.algafood.domain.model.Estado;
 @Repository
 public interface EstadoRepository extends JpaRepository<Estado, Long> {
     
+    void remover(Long id);
 }

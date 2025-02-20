@@ -7,7 +7,7 @@ import java.util.Map;
 import io.swagger.v3.oas.models.media.Content;
 import io.swagger.v3.oas.models.media.MediaType;
 import io.swagger.v3.oas.models.media.Schema;
-import org.springdoc.core.customizers.OpenApiCustomiser;
+import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import com.algaworks.algafood.api.exceptionHandler.Problem;
@@ -83,7 +83,7 @@ import io.swagger.v3.oas.models.tags.Tag;
 
 
     @Bean
-    public OpenApiCustomiser openApiCustomiser() {
+    public OpenApiCustomizer openApiCustomizer() {
         return openApi -> {
             openApi.getPaths().values()
                 .forEach(pathItem -> pathItem.readOperationsMap()
